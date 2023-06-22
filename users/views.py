@@ -1,20 +1,31 @@
-from forms import *
-from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, PasswordChangeView
+from users.forms import *
+from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, PasswordChangeView, \
+    PasswordResetDoneView, PasswordChangeDoneView
 
 
 # Create your views here.
 class CustomLoginView(LoginView):
-    template_name = 'registration/login.html'
     authentication_form = CustomLoginForm
 
 
 class CustomLogoutView(LogoutView):
-    next_page = 'home'
+    next_page = 'admin console'
 
 
 class CustomPasswordResetView(PasswordResetView):
-    template_name = 'registration/password_reset_form.html'
     success_url = 'password_reset_done'
-    email_template_name = 'registration/password_reset_email.html'
     form_class = CustomPasswordResetForm
 
+
+class CustomPasswordResetDoneView(PasswordResetDoneView):
+    template_name = "registration/password_reset_done.html"
+
+
+class CustomPasswordChangeView(PasswordChangeView):
+    template_name = 'registration/password_change.html'
+    success_url = 'password_change_done'
+    form_class = CustomPasswordChangeForm
+
+
+class CustomPasswordChangeDoneView(PasswordChangeDoneView):
+    template_name = 'registration/password_change_done.html'
