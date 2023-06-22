@@ -9,6 +9,15 @@
 <body>
 
 <div class="container px-4 py-4">
+    <ul class="sidebar-nav">
+        {% if user.is_authenticated %}
+            <li>User: {{ user.get_username }}</li>
+            <li><a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
+        {% else %}
+            <li><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
+        {% endif %}
+    </ul>
+
     <div class="row">
         <div class="col">
             <p class="h1">{% block pageTitle %}<!-- Insert code here -->{% endblock %}</p>
