@@ -50,6 +50,8 @@ INSTALLED_APPS = [
 
     # Third party apps
     'dotenv',
+    'allauth',
+    'allauth.account',
 
     # Local apps
     'annuaire',
