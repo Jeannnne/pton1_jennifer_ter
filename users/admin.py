@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from users.models import Collaborator
+from users.models import Collaborator, Service
 
 
 # Register your models here.
@@ -12,3 +12,10 @@ class CollaboratorAdmin(admin.ModelAdmin):
     list_filter = ['date_joined', 'date_left']
     search_fields = ['username', 'email', 'current_job']
     readonly_fields = ['date_joined']
+
+
+@admin.register(Service)
+class ServiceAdmin(admin.ModelAdmin):
+    list_display = ['name', 'parent_group']
+    list_filter = ['parent_group']
+    search_fields = ['name']

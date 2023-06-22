@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db.models import CharField, EmailField, DateField
 from phonenumber_field.modelfields import PhoneNumberField
+from django.db import models
 
 from users.validators import validate_date_range
 
@@ -25,13 +26,18 @@ class Collaborator(AbstractUser):
                                     help_text="Entrez un numéro de téléphone au format français "
                                               "(par exemple, 0612345678)."
                                     )
-    service = CharField(blank=True, max_length=100,
-                        help_text="Entrez le service du collaborateur "
-                                  "(par exemple, RH pour Service des Ressources Humaines)."
-                        )
+    service = models.ManyToManyField('Service', related_name='collaborators')
 
     # Not editable fields
     date_joined = DateField(auto_now_add=True, validators=[validate_date_range])
 
     def __str__(self):
         return self.username
+
+
+class Service(models.Model):
+    parent_group = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
+    name = models.CharField(unique=True, max_length=100)
+
+    def __str__(self):
+        return self.name

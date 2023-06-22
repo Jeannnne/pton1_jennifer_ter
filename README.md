@@ -36,3 +36,5 @@ J'aurais pu utuliser from django.utils.translation import gettext_lazy as _
  pour faciliter la traduciton de mon app en plusieurs langages mais je n'ai pas eu le temps.
 
 
+
+Pour les services, j'ai créer une table qui contient un parent (un object du meme type) et un nom afin de hierachiser les services présenter comme dans le sujet.
