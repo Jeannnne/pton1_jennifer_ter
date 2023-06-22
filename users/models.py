@@ -2,18 +2,24 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models import CharField, EmailField, DateField
 from phonenumber_field.modelfields import PhoneNumberField
 
-from users.validators import validate_french_phone_number, validate_date_range
+from users.validators import validate_date_range
 
 
 # Create your models here.
 
 class Collaborator(AbstractUser):
-    current_job = CharField(blank=True, max_length=100)
-    phone_number = PhoneNumberField(blank=True, validators=[validate_french_phone_number])
+    # Not required fields
     email = EmailField(blank=True)
-    date_joined = DateField(auto_now_add=True, validators=[validate_date_range])
     date_left = DateField(blank=True, null=True, validators=[validate_date_range])
     current_direction = CharField(blank=True, max_length=100)
+
+    # Required fields
+    current_job = CharField(blank=True, max_length=100)
+    phone_number = PhoneNumberField(blank=True, region='FR', help_text="Entrez un numéro de téléphone au format français (par exemple, 0612345678).")
+    service = CharField(blank=True, max_length=100)
+
+    # Not editable fields
+    date_joined = DateField(auto_now_add=True, validators=[validate_date_range])
 
     def __str__(self):
         return self.username
