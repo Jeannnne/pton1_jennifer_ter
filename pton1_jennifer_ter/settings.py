@@ -50,8 +50,6 @@ INSTALLED_APPS = [
 
     # Third party apps
     'dotenv',
-    'allauth',
-    'allauth.account',
 
     # Local apps
     'annuaire',
@@ -141,3 +139,4 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
