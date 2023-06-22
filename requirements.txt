@@ -1,1 +1,2 @@
 python-dotenv
+django-bootstrap-v5

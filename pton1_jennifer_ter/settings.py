@@ -50,6 +50,7 @@ INSTALLED_APPS = [
 
     # Third party apps
     'dotenv',
+    "bootstrap5",
 
     # Local apps
     'annuaire',
