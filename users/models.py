@@ -13,7 +13,7 @@ class Collaborator(AbstractUser):
     email = EmailField(unique=True)
     date_joined = DateField(auto_now_add=True, validators=[validate_date_range])
     date_left = DateField(blank=True, null=True, validators=[validate_date_range])
+    current_direction = CharField(blank=True, max_length=100)
 
     def __str__(self):
         return self.username
-
