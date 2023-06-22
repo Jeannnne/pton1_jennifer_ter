@@ -15,6 +15,10 @@ Par conséquent, je ne rajoute pas plusieurs choses tel que le template name car
     class CustomPasswordResetView(PasswordResetView):
         form_class = CustomPasswordResetForm
 
+Il y a possiilité de clicker sur le boutton mot de passe oublier, avec un formulaire pour envoyer son email afin de changer le mot de passe.
+Pour l'instant l'email est envoyé sur le terminal, mais il est possible de le configurer pour qu'il soit envoyé sur une adresse mail.
+Un lien est genéré avec un token pour changer le mot de passe.
+
 J'ai rajouter la class LoginRequiredMixin sur CustomPasswordChangeView et CustomPasswordChangeDoneView,
 comme ca uniquement les utilisateurs connectés peuvent changer leur mot de passe.
 
