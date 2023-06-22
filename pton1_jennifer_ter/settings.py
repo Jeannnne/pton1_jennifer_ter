@@ -27,9 +27,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY', 'There is no secret key in your dotenv file or environment variables !')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-ENVIRONMENT = os.getenv('DEVELOPMENT', 'PRODUCTION')
+ENVIRONMENT = os.getenv('ENVIRONMENT', 'PRODUCTION')
 
 DEBUG = ENVIRONMENT.lower() in ('development', 'dev')
+
 
 if DEBUG:
     ALLOWED_HOSTS = []
