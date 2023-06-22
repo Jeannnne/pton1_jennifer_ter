@@ -40,4 +40,6 @@ class Service(models.Model):
     name = models.CharField(unique=True, max_length=100)
 
     def __str__(self):
-        return self.name
+        if self.parent_group is None:
+            return self.name
+        return self.parent_group.__str__() + '/' + self.name
