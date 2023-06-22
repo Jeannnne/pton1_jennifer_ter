@@ -1,19 +1,35 @@
 from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm, SetPasswordForm
+from django import forms
 
 
 class CustomLoginForm(AuthenticationForm):
-    # Personnalisez votre formulaire de connexion ici si nécessaire
-    # Ajoutez des champs supplémentaires ou modifiez le comportement du formulaire selon vos besoins
-    pass
+    username = forms.CharField(
+        label="Username",
+        widget=forms.TextInput(attrs={'autofocus': True}),
+    )
+    password = forms.CharField(
+        label='Password',
+        strip=False,
+        widget=forms.PasswordInput
+    )
 
 
 class CustomPasswordResetForm(PasswordResetForm):
-    # Personnalisez votre formulaire de demande de réinitialisation de mot de passe ici si nécessaire
-    # Ajoutez des champs supplémentaires ou modifiez le comportement du formulaire selon vos besoins
-    pass
+    email = forms.EmailField(
+        label="Email",
+        max_length=254,
+        widget=forms.EmailInput(attrs={'autocomplete': 'email'}),
+    )
 
 
 class CustomPasswordChangeForm(SetPasswordForm):
-    # Personnalisez votre formulaire de réinitialisation de mot de passe ici si nécessaire
-    # Ajoutez des champs supplémentaires ou modifiez le comportement du formulaire selon vos besoins
-    pass
+    new_password1 = forms.CharField(
+        label="New password",
+        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
+        strip=False,
+    )
+    new_password2 = forms.CharField(
+        label="Confirm new password",
+        strip=False,
+        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
+    )
