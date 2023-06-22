@@ -3,6 +3,7 @@ from django.db.models import CharField, EmailField, DateField
 from phonenumber_field.modelfields import PhoneNumberField
 from django.db import models
 
+from users.utils import download_default_profile_image
 from users.validators import validate_date_range
 
 
@@ -24,8 +25,8 @@ class Collaborator(AbstractUser):
     )
 
     profile_picture = models.ImageField(
-        upload_to='profile_pictures',
-        default='default_profile_picture.jpg'
+        upload_to='default_images/',
+        default=download_default_profile_image
     )
 
     # Required fields
@@ -42,6 +43,11 @@ class Collaborator(AbstractUser):
 
     def __str__(self):
         return self.username
+
+    def save(self, *args, **kwargs):
+        if self.profile_picture.name == 'default_profile_image.jpg':
+            self.profile_picture.name = self.profile_picture.field.upload_to
+        super().save(*args, **kwargs)
 
 
 class Service(models.Model):
