@@ -37,7 +37,6 @@ class Collaborator(AbstractUser):
                   "(par exemple, 0612345678)."
     )
 
-
     # Not editable fields
     date_joined = DateField(auto_now_add=True, validators=[validate_date_range])
 
