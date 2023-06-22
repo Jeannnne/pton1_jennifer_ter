@@ -47,6 +47,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Third party apps
+    'dotenv',
+    "bootstrap5",
+
+    # Local apps
+    'annuaire',
+
 ]
 
 MIDDLEWARE = [
@@ -132,3 +140,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = '/admin'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
