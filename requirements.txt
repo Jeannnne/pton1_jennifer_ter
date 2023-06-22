@@ -1,3 +1,4 @@
 python-dotenv
 django-bootstrap-v5
 django-phonenumber-field
+pillow

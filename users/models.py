@@ -11,22 +11,32 @@ from users.validators import validate_date_range
 class Collaborator(AbstractUser):
     # Not required fields
     email = EmailField(blank=True)
-    date_left = DateField(blank=True,
-                          null=True,
-                          validators=[validate_date_range]
-                          )
-    current_direction = CharField(blank=True, max_length=100,
-                                  help_text="Entrez la direction actuelle du collaborateur "
-                                            "(par exemple, Direction des Systèmes d'Information)."
-                                  )
+    date_left = DateField(
+        blank=True,
+        null=True,
+        validators=[validate_date_range]
+    )
+    current_direction = CharField(
+        blank=True,
+        max_length=100,
+        help_text="Entrez la direction actuelle du collaborateur "
+                  "(par exemple, Direction des Systèmes d'Information)."
+    )
+
+    profile_picture = models.ImageField(
+        upload_to='profile_pictures',
+        default='default_profile_picture.jpg'
+    )
 
     # Required fields
-    current_job = CharField(blank=True, max_length=100)
-    phone_number = PhoneNumberField(blank=True, region='FR',
-                                    help_text="Entrez un numéro de téléphone au format français "
-                                              "(par exemple, 0612345678)."
-                                    )
     service = models.ManyToManyField('Service', related_name='collaborators')
+    current_job = CharField(max_length=100)
+    phone_number = PhoneNumberField(
+        region='FR',
+        help_text="Entrez un numéro de téléphone au format français "
+                  "(par exemple, 0612345678)."
+    )
+
 
     # Not editable fields
     date_joined = DateField(auto_now_add=True, validators=[validate_date_range])
