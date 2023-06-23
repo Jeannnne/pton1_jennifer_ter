@@ -3,14 +3,20 @@
 {% endblock %}
 {% block content %}
     <ul>
+        <li><strong>Nom</strong>{{ collaborator.last_name }}</li>
+        <li><strong>Prenom</strong>{{ collaborator.first_name }}</li>
+        <li><strong>Current job:</strong> {{ collaborator.current_job }}</li>
+        <li><strong>Email:</strong> {{ collaborator.email }}</li>
+        <li><strong>Phone number:</strong> {{ collaborator.phone_number }}</li>
+        <li><strong>Date d'arrivée:</strong> {{ collaborator.date_joined }}</li>
+        <li><strong>Direction actuelle:</strong> {{ collaborator.current_direction }}</li>
         <li>
             <strong>Service:</strong>
             {% for service in services %}
                 {{ service }}
             {% endfor %}
         </li>
-        <li><strong>Current job:</strong> {{ collaborator.current_job }}</li>
+
         <li><img src="{{ collaborator.profile_picture.url }}" class="img-responsive" style="width: 30%; float: left; margin-right: 10px;" alt="Picture of this user"/></li>
-        <li><strong>Phone number:</strong> {{ collaborator.phone_number }}</li>
     </ul>
 {% endblock %}
