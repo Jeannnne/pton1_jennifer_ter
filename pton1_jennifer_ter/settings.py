@@ -130,11 +130,16 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = '/admin'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'annuaire_home'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 AUTH_USER_MODEL = 'users.Collaborator'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 # Media files for the download of the images
 DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'

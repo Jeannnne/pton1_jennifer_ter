@@ -11,7 +11,7 @@ class CustomLoginView(LoginView):
 
 
 class CustomLogoutView(LogoutView):
-    next_page = 'admin console'
+    next_page = 'annuaire_home'
 
 
 # Reset password views
