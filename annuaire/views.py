@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 from django.views.generic import ListView, DetailView
 
 from annuaire.forms import ChangeProfileForm
-from users.models import Collaborator
+from users.models import Collaborator, Service
 
 
 # Create your views here.
@@ -14,7 +14,18 @@ class HomeView(LoginRequiredMixin, ListView):
     paginate_by = 2
 
     def get_queryset(self):
-        return Collaborator.objects.all().order_by('service')
+        queryset = Collaborator.objects.all().order_by('service')
+        service_id = self.request.GET.get('service_id')
+
+        if service_id:
+            queryset = queryset.filter(service__id=service_id)
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['services'] = Service.objects.all()
+        return context
 
 
 # Create a new user
