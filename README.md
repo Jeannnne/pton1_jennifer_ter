@@ -63,3 +63,7 @@ Dans l hom de l'annuaire j'ai trié la liste des services pour avoir le plus glo
 
 Pour la modification d'un profile j'ai fait deux sécurité, avec le path on ne peux pas accéder au formulaire pour la modification si ce n'est pas notre page
 De plus sur la page d'un detail, le boutton update n'est visible que lorsque l'utilisateur est sur sa propre page.
+
+Comme mon model Collaborateur herite de AbstractUser, je ne suis pas en mesure de mettre le champ date_joined en read only. 
+Sauf si je créer un noveauchamp mais pour cela il faut que la valeur soit diffe2rente de la creation du user dans la bdd sinon c'est de la dupplciation de donnée avec le champ deja existant date_joined
+Attendre la réponse de la prof pour savoir si date_joined+entreprise = date.now
