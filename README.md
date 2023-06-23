@@ -45,7 +45,8 @@ J'aurais pu utuliser from django.utils.translation import gettext_lazy as _
 Pour les services, j'ai créer une table qui contient un parent (un object du meme type) et un nom afin de hierachiser les services présenter comme dans le sujet.
 
 Pour les images j'ai rajouter une variable dans settings.py comme ca si on veut changer la source de l'image on peut 
-
+De plus pour chaque nouveau user, on telecharge une nouvelle image, ca permet de savoir si un novueau user à été créer au lieu d'utiliser toujours la meme image par defaut.
+(Ou est ce qu'il faut telecharger une fois puis reutilsier l'image ? )
 
 Avec cette configuration, le répertoire default_images sera créé automatiquement lorsque le module config sera importé dans settings.py.
 
