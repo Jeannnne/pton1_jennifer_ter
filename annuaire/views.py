@@ -10,11 +10,11 @@ from users.models import Collaborator
 # Create your views here.
 class HomeView(LoginRequiredMixin, ListView):
     model = Collaborator
-    paginate_by = 15
     template_name = 'annuaire/home.html'
+    paginate_by = 2
 
     def get_queryset(self):
-        return Collaborator.objects.all()
+        return Collaborator.objects.all().order_by('service')
 
 
 # Create a new user

@@ -1,9 +1,37 @@
 {% block content %}
-    {% for collaborator in collaborator_list %}
-        <div class="col-md-4">
-            {{ collaborator.name }}
-            <img src="{{ collaborator.profile_picture.url }}" class="img-responsive"
-                 style="width: 30%; float: left; margin-right: 10px;"/>
+    <div class="container">
+        <div class="row">
+                    <!-- Boucle sur les objets User pour afficher les photos et les liens -->
+            {% for collaboraor in page_obj %}
+                <div class="col-md-3">
+                    <a href="{% url 'collaborator_detail' collaboraor.id %}">
+                        <img src="{{ collaboraor.profile_picture.url }}" alt="{{ collaboraor.username }}"
+                             class="img-fluid" style="width: 30%; margin-right: 10px;">
+                    </a>
+                    <h4><a href="{% url 'collaborator_detail' collaboraor.id %}">{{ collaboraor.username }}</a></h4>
+                </div>
+
+            {% empty %}
+                <p>Aucun utilisateur trouvé.</p>
+            {% endfor %}
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">&laquo; first</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">next</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+
         </div>
-    {% endfor %}
+    </div>
 {% endblock %}
