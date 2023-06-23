@@ -1,6 +1,7 @@
 {% block content %}
     {% for collaborator in collaborator_list %}
         <h2>Image de profil</h2>
-            <img src="{{ MEDIA_URL }}default_profile_image.jpg" alt="Image de profil">
+            {% load static %}
+        <img src="{% static 'default_images/default_profile_picture.jpg' %}" alt="Profile picture">
     {% endfor %}
 {% endblock %}

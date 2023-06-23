@@ -48,3 +48,17 @@ Pour les images j'ai rajouter une variable dans settings.py comme ca si on veut 
 
 
 Avec cette configuration, le répertoire default_images sera créé automatiquement lorsque le module config sera importé dans settings.py.
+
+Pour les servces j'ai réecris la fonction str afin de visualiser l'arborescence compltete du service (ex= DEV devient DSI/DEV).
+
+Pour les images il faut avoir un dossier static 
+
+Pour la gestion des images, j'ai stocké l'image par defaut dans le dossier static car c'est un fichier qui sera tres rarement changé (au lancement du chargeur on telecharge une fois une photo et on ne la change pas)
+Mais pour toutes les images et futur media que les utilisateurs vont telecharger, je vais les placer dans un dossier media.
+
+Pour facilité le deploiement j'ai mon dossier static qui me permet de stocker mes fichiers statiques.
+Ensuite j'ai un dossier staticfiles qui est généré automatiquement par django lors de la commande collectstatic.
+
+C'est important de faire cette distinction car deja ce sont des bonnes pratiques et surtout j'utilise les outils de django pour m'aider lors du deploiement.
+
+

@@ -1,8 +1,13 @@
+from io import BytesIO
+
+import requests
 from django.contrib.auth.models import AbstractUser
+from django.core.files import File
 from django.db.models import CharField, EmailField, DateField
 from phonenumber_field.modelfields import PhoneNumberField
 from django.db import models
 
+from pton1_jennifer_ter import settings
 from users.utils import download_default_profile_image
 from users.validators import validate_date_range
 
@@ -25,12 +30,15 @@ class Collaborator(AbstractUser):
     )
 
     profile_picture = models.ImageField(
-        upload_to='default_images/',
-        default=download_default_profile_image
+        upload_to=settings.DEFAULT_IMAGES_DIR_NAME + '/',
     )
 
     # Required fields
-    service = models.ManyToManyField('Service', related_name='collaborators')
+    service = models.ManyToManyField(
+        'Service',
+        related_name='collaborators',
+        help_text="Selectionnez le service du collaborateur.S'il n'est pas disponible veuillez le créer."
+    )
     current_job = CharField(max_length=100)
     phone_number = PhoneNumberField(
         region='FR',
@@ -39,20 +47,38 @@ class Collaborator(AbstractUser):
     )
 
     # Not editable fields
-    date_joined = DateField(auto_now_add=True, validators=[validate_date_range])
+    date_joined = DateField(
+        auto_now_add=True,
+        validators=[validate_date_range]
+    )
 
     def __str__(self):
         return self.username
 
     def save(self, *args, **kwargs):
-        if self.profile_picture.name == 'default_profile_image.jpg':
-            self.profile_picture.name = self.profile_picture.field.upload_to
+        if not self.profile_picture:
+            response = requests.get(settings.DEFAULT_IMAGE_LINK, stream=True)
+            response.raise_for_status()
+
+            print(response.status_code)
+
+            image_file = BytesIO(response.content)
+            self.profile_picture.save(settings.DEFAULT_IMAGE_NAME, File(image_file))
+
         super().save(*args, **kwargs)
 
 
 class Service(models.Model):
-    parent_group = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
-    name = models.CharField(unique=True, max_length=100)
+    parent_group = models.ForeignKey(
+        'self',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+    name = models.CharField(
+        unique=True,
+        max_length=100
+    )
 
     def __str__(self):
         if self.parent_group is None:

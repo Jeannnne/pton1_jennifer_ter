@@ -125,11 +125,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
-
-STATIC_URL = 'static/'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -153,5 +148,11 @@ DEFAULT_IMAGE_LINK = os.getenv('DEFAULT_IMAGE_LINK', 'https://thispersondoesnote
 DEFAULT_IMAGES_DIR_NAME = 'default_images'
 DEFAULT_IMAGES_DIR = os.path.join(MEDIA_ROOT, DEFAULT_IMAGES_DIR_NAME)
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+STATIC_URL = 'static/'
+
+# For deployment
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 

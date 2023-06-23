@@ -6,5 +6,10 @@ from pton1_jennifer_ter import settings
 
 urlpatterns = [
     path('home', views.HomeView.as_view(), name='annuaire_home'),
+    path('image_upload', views.collaborator_view, name='image_upload'),
+    path('success', views.success, name='success'),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
