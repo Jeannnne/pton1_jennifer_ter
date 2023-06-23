@@ -8,8 +8,9 @@ class CreateCollaboratorForm(forms.ModelForm):
         fields = '__all__'
         exclude = ['date_joined', 'last_login', 'is_superuser', 'is_staff', 'is_active', 'groups', 'user_permissions']
 
-class CollaboratorUpdateForm:
+
+class CollaboratorUpdateForm(forms.ModelForm):
     class Meta:
         model = Collaborator
         fields = '__all__'
-        exclude = ['date_joined', 'last_login', 'is_superuser', 'is_staff', 'is_active', 'groups', 'user_permissions']
+        exclude = ['password','date_joined', 'last_login', 'is_superuser', 'is_staff', 'is_active', 'groups', 'user_permissions']

@@ -1,10 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, Http404
-from django.shortcuts import redirect, render
-from django.urls import reverse, reverse_lazy
+from django.http import Http404
+from django.urls import reverse
 from django.views.generic import ListView, DetailView, UpdateView
 
-from annuaire.forms import CreateCollaboratorForm, CollaboratorUpdateForm
+from annuaire.forms import CollaboratorUpdateForm
 from users.models import Collaborator, Service
 
 
@@ -48,21 +47,20 @@ class CollaboratorDetailView(LoginRequiredMixin, DetailView):
 
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = Collaborator
-    fields = '__all__'
-    exclude = ['date_joined', 'last_login', 'is_superuser', 'is_staff', 'is_active', 'groups', 'user_permissions']
     template_name = 'annuaire/profile_update.html'
     form_class = CollaboratorUpdateForm
+
+    def dispatch(self, request, *args, **kwargs):
+        collaborator_id = kwargs['pk']
+        if self.request.user.id != collaborator_id:
+            raise Http404("Vous n'êtes pas autorisé à modifier ce profil.")
+        return super().dispatch(request, *args, **kwargs)
 
     def get_object(self, queryset=None):
         return self.request.user
 
     def get_success_url(self):
-        return reverse('collaborator-detail', kwargs={'pk': self.object.pk})
-
-    def dispatch(self, request, *args, **kwargs):
-        if self.request.user.id != self.get_object().id:
-            raise Http404("Vous n'êtes pas autorisé à modifier ce profil.")
-        return super().dispatch(request, *args, **kwargs)
+        return reverse('collaborator_detail', kwargs={'pk': self.object.pk})
 
 #
 # # Create a new user
