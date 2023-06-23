@@ -1,0 +1,16 @@
+{% block pageTitle %}
+    Profile of {{ collaborator.username }}
+{% endblock %}
+{% block content %}
+    <ul>
+        <li>
+            <strong>Service:</strong>
+            {% for service in services %}
+                {{ service }}
+            {% endfor %}
+        </li>
+        <li><strong>Current job:</strong> {{ collaborator.current_job }}</li>
+        <li><img src="{{ collaborator.profile_picture.url }}" class="img-responsive" style="width: 30%; float: left; margin-right: 10px;" alt="Picture of this user"/></li>
+        <li><strong>Phone number:</strong> {{ collaborator.phone_number }}</li>
+    </ul>
+{% endblock %}

@@ -3,7 +3,7 @@ from io import BytesIO
 import requests
 from django.contrib.auth.models import AbstractUser
 from django.core.files import File
-from django.db.models import CharField, EmailField, DateField
+from django.db.models import CharField, EmailField, DateTimeField
 from phonenumber_field.modelfields import PhoneNumberField
 from django.db import models
 
@@ -16,7 +16,7 @@ from users.validators import validate_date_range
 class Collaborator(AbstractUser):
     # Not required fields
     email = EmailField(blank=True)
-    date_left = DateField(
+    date_left = DateTimeField(
         blank=True,
         null=True,
         validators=[validate_date_range]
@@ -48,7 +48,7 @@ class Collaborator(AbstractUser):
     )
 
     # Not editable fields
-    date_joined = DateField(
+    date_joined = DateTimeField(
         auto_now_add=True,
         validators=[validate_date_range]
     )

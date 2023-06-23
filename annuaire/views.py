@@ -1,13 +1,14 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from annuaire.forms import ChangeProfileForm
 from users.models import Collaborator
 
 
 # Create your views here.
-class HomeView(ListView):
+class HomeView(LoginRequiredMixin, ListView):
     model = Collaborator
     paginate_by = 15
     template_name = 'annuaire/home.html'
@@ -15,6 +16,8 @@ class HomeView(ListView):
     def get_queryset(self):
         return Collaborator.objects.all()
 
+
+# Create a new user
 def collaborator_view(request):
     if request.method == 'POST':
         form = ChangeProfileForm(request.POST, request.FILES)
@@ -24,8 +27,21 @@ def collaborator_view(request):
             return redirect('success')
     else:
         form = ChangeProfileForm()
-    return render(request, 'annuaire/change_profile.html', {'form': form})
+    return render(request, 'annuaire/new_profile.html', {'form': form})
 
 
 def success(request):
     return HttpResponse('successfully uploaded')
+
+
+class CollaboratorDetailView(LoginRequiredMixin, DetailView):
+    model = Collaborator
+    template_name = 'annuaire/collaborator_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        collaborator = Collaborator.objects.get(pk=self.kwargs['pk'])
+
+        context['services'] = collaborator.service.all()
+
+        return context
