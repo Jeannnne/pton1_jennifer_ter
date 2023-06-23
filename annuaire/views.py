@@ -15,7 +15,6 @@ class HomeView(ListView):
     def get_queryset(self):
         return Collaborator.objects.all()
 
-
 def collaborator_view(request):
     if request.method == 'POST':
         form = ChangeProfileForm(request.POST, request.FILES)

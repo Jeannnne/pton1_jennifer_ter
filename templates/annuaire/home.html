@@ -1,7 +1,9 @@
 {% block content %}
     {% for collaborator in collaborator_list %}
-        <h2>Image de profil</h2>
-            {% load static %}
-        <img src="{% static 'default_images/default_profile_picture.jpg' %}" alt="Profile picture">
+        <div class="col-md-4">
+            {{ collaborator.name }}
+            <img src="{{ collaborator.profile_picture.url }}" class="img-responsive"
+                 style="width: 30%; float: left; margin-right: 10px;"/>
+        </div>
     {% endfor %}
 {% endblock %}

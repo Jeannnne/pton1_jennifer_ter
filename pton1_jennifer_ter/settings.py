@@ -142,17 +142,15 @@ DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-DEFAULT_IMAGE_NAME = 'default_profile_picture.jpg'
+DEFAULT_IMAGE_NAME = 'default_picture.jpg'
 DEFAULT_IMAGE_LINK = os.getenv('DEFAULT_IMAGE_LINK', 'https://thispersondoesnotexist.com/')
 
-DEFAULT_IMAGES_DIR_NAME = 'default_images'
-DEFAULT_IMAGES_DIR = os.path.join(MEDIA_ROOT, DEFAULT_IMAGES_DIR_NAME)
+PROFILE_PICTURE_DIR_NAME = 'profile_pictures'
+PROFILE_PICTURE_PATH = os.path.join(MEDIA_ROOT, PROFILE_PICTURE_DIR_NAME)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-
-# For deployment
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 

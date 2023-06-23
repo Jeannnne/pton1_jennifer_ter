@@ -51,14 +51,9 @@ Avec cette configuration, le répertoire default_images sera créé automatiquem
 
 Pour les servces j'ai réecris la fonction str afin de visualiser l'arborescence compltete du service (ex= DEV devient DSI/DEV).
 
-Pour les images il faut avoir un dossier static 
+Pour le stockage des images c'est vrai que ca serait mieux de faire un renommage automatique avec prends le nom de l'app en question et qui créer des sous dossiers pour qu'on ait :
 
-Pour la gestion des images, j'ai stocké l'image par defaut dans le dossier static car c'est un fichier qui sera tres rarement changé (au lancement du chargeur on telecharge une fois une photo et on ne la change pas)
-Mais pour toutes les images et futur media que les utilisateurs vont telecharger, je vais les placer dans un dossier media.
+    media/APP_NAME/images/IMAGE_NAME
 
-Pour facilité le deploiement j'ai mon dossier static qui me permet de stocker mes fichiers statiques.
-Ensuite j'ai un dossier staticfiles qui est généré automatiquement par django lors de la commande collectstatic.
-
-C'est important de faire cette distinction car deja ce sont des bonnes pratiques et surtout j'utilise les outils de django pour m'aider lors du deploiement.
-
+C'est plus propre et plus facile à retrouver. Mais je ne l'ai pas fait pour l'instant par manque de temps.
 

@@ -8,7 +8,6 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django.db import models
 
 from pton1_jennifer_ter import settings
-from users.utils import download_default_profile_image
 from users.validators import validate_date_range
 
 
@@ -30,7 +29,9 @@ class Collaborator(AbstractUser):
     )
 
     profile_picture = models.ImageField(
-        upload_to=settings.DEFAULT_IMAGES_DIR_NAME + '/',
+        upload_to= settings.PROFILE_PICTURE_DIR_NAME + '/',
+        blank=True,
+        null=True,
     )
 
     # Required fields
@@ -60,10 +61,12 @@ class Collaborator(AbstractUser):
             response = requests.get(settings.DEFAULT_IMAGE_LINK, stream=True)
             response.raise_for_status()
 
-            print(response.status_code)
+            if response.ok:
+                image_file = BytesIO(response.content)
+                self.profile_picture.save(settings.DEFAULT_IMAGE_NAME, File(image_file))
 
-            image_file = BytesIO(response.content)
-            self.profile_picture.save(settings.DEFAULT_IMAGE_NAME, File(image_file))
+            else:
+                print("Error while downloading default image")
 
         super().save(*args, **kwargs)
 
