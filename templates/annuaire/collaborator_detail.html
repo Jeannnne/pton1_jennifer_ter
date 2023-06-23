@@ -2,6 +2,9 @@
     Profile of {{ collaborator.username }}
 {% endblock %}
 {% block content %}
+    {% if user.id == collaborator.id %}
+        <a href="{% url 'profile_update' collaborator.id %}">Update </a>
+    {% endif %}
     <ul>
         <li><strong>Id</strong> {{ collaborator.id }}</li>
         <li><strong>Nom</strong>{{ collaborator.last_name }}</li>

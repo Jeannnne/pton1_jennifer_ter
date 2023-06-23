@@ -60,3 +60,6 @@ C'est plus propre et plus facile à retrouver. Mais je ne l'ai pas fait pour l'i
 
 Pour le home de l'annuaire j'ai fait en sorte que si on click sur l'image, on peut aussi acceder a la page du user
 Dans l hom de l'annuaire j'ai trié la liste des services pour avoir le plus global en premier et les plus specifique en bas.
+
+Pour la modification d'un profile j'ai fait deux sécurité, avec le path on ne peux pas accéder au formulaire pour la modification si ce n'est pas notre page
+De plus sur la page d'un detail, le boutton update n'est visible que lorsque l'utilisateur est sur sa propre page.
