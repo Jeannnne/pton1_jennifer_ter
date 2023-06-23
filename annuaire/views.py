@@ -24,7 +24,11 @@ class HomeView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['services'] = Service.objects.all()
+
+        services = Service.objects.all()
+        sorted_services = sorted(services, key=lambda x: str(x))
+
+        context['services'] = sorted_services
         return context
 
 

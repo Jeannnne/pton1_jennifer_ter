@@ -58,4 +58,5 @@ Pour le stockage des images c'est vrai que ca serait mieux de faire un renommage
 
 C'est plus propre et plus facile à retrouver. Mais je ne l'ai pas fait pour l'instant par manque de temps.
 
-Pour le home de l'annuaire j'ai fait en sorte que si on click sur l'image, on peut aussi acceder a la page du user 
+Pour le home de l'annuaire j'ai fait en sorte que si on click sur l'image, on peut aussi acceder a la page du user
+Dans l hom de l'annuaire j'ai trié la liste des services pour avoir le plus global en premier et les plus specifique en bas.
