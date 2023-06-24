@@ -21,15 +21,9 @@ class Collaborator(AbstractUser):
         null=True,
         validators=[validate_date_range]
     )
-    current_direction = CharField(
-        blank=True,
-        max_length=100,
-        help_text="Entrez la direction actuelle du collaborateur "
-                  "(par exemple, Direction des Systèmes d'Information)."
-    )
 
     profile_picture = models.ImageField(
-        upload_to= settings.PROFILE_PICTURE_DIR_NAME + '/',
+        upload_to=settings.PROFILE_PICTURE_DIR_NAME + '/',
         blank=True,
         null=True,
     )
@@ -48,7 +42,7 @@ class Collaborator(AbstractUser):
     )
 
     # Not editable fields
-    date_joined = DateTimeField(
+    company_date_joined = DateTimeField(
         auto_now_add=True,
         validators=[validate_date_range]
     )
@@ -69,6 +63,9 @@ class Collaborator(AbstractUser):
                 print("Error while downloading default image")
 
         super().save(*args, **kwargs)
+
+    def can_be_deleted_by(self, user):
+        return user.is_superuser
 
 
 class Service(models.Model):

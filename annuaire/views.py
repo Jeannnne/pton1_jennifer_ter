@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, UpdateView
 
 from annuaire.forms import CollaboratorUpdateForm
@@ -61,6 +61,16 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('collaborator_detail', kwargs={'pk': self.object.pk})
+
+
+def CollaboratorDeleteView(UserPassesTestMixin, DeleteView):
+    model = Collaborator
+    template_name = 'annuaire/collaborator_delete.html'
+    success_url = reverse_lazy('annuaire_home')
+
+    def test_func(self):
+        collaborator = self.get_object()
+        return collaborator.can_be_deleted_by(self.request.user)
 
 #
 # # Create a new user

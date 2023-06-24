@@ -7,11 +7,11 @@ from users.models import Collaborator, Service
 
 @admin.register(Collaborator)
 class CollaboratorAdmin(admin.ModelAdmin):
-    list_display = ['username', 'email', 'current_job', 'date_joined', 'date_left']
+    list_display = ['username', 'email', 'current_job', 'company_date_joined', 'date_left']
     list_filter = ['date_joined', 'date_left']
     search_fields = ['username', 'email', 'current_job']
     readonly_fields = ['date_joined']
-    exclude = ['password', 'last_login']
+    exclude = ['password', 'last_login', 'groups', 'user_permissions', 'is_active']
 
 
 @admin.register(Service)
