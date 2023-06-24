@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <form action="" method="get">
+            <label for="service-select">Sélectionnez un service :</label>
+            <select name="service_id" id="service-select">
+                <option value="">Tous les services</option>
+                {% for service in services %}
+                    <option value="{{ service.id }}">{{ service.name }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Filtrer</button>
+        </form>
+
+        <div class="row">
+            <ul>
+            {% for service in services %}
+                <li>{{ service }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+
+
+        <div class="row">
+            <!-- Boucle sur les objets User pour afficher les photos et les liens -->
+            {% for collaborator in page_obj %}
+                <div class="col-md-3">
+                    <a href="{% url 'collaborator_detail' collaborator.id %}">
+                        <img src="{{ collaborator.profile_picture.url }}" alt="{{ collaborator.username }}"
+                             class="img-fluid" style="width: 30%; margin-right: 10px;">
+                    </a>
+                    <h4><a href="{% url 'collaborator_detail' collaborator.id %}">{{ collaborator.username }}</a></h4>
+                </div>
+
+            {% empty %}
+                <p>Aucun utilisateur trouvé.</p>
+            {% endfor %}
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">&laquo; first</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">next</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

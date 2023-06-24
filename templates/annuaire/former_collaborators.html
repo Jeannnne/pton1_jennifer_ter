@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+
+{% block pageTitle %}
+    Listes des anciens employés
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <form action="" method="get">
+            <label for="service-select">Sélectionnez un service :</label>
+            <select name="service_id" id="service-select">
+                <option value="">Tous les services</option>
+                {% for service in services %}
+                    <option value="{{ service.id }}">{{ service.name }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Filtrer</button>
+        </form>
+    </div>
+    <div class="container">
+        {% for collaborator in former_collaborators %}
+            <div class="col-md-3">
+                    <a href="{% url 'collaborator_detail' collaborator.id %}">
+                        <img src="{{ collaborator.profile_picture.url }}" alt="{{ collaboraor.username }}"
+                             class="img-fluid" style="width: 30%; margin-right: 10px;">
+                    </a>
+                    <h4><a href="{% url 'collaborator_detail' collaborator.id %}">{{ collaboraor.username }}</a></h4>
+                </div>
+
+            {% empty %}
+                <p>Aucun ancien collaborateur.</p>
+        {% endfor %}
+    </div>
+
+{% endblock %}

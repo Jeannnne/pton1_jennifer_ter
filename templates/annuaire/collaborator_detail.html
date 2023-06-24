@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block pageTitle %}
+    Profile of {{ collaborator.username }}
+{% endblock %}
+
+{% block content %}
+    {% if user.id == collaborator.id %}
+        <a href="{% url 'profile_update' collaborator.id %}">Update </a>
+    {% endif %}
+    <ul>
+        <li><strong>Id</strong> {{ collaborator.id }}</li>
+        <li><strong>Nom</strong>{{ collaborator.last_name }}</li>
+        <li><strong>Prenom</strong>{{ collaborator.first_name }}</li>
+        <li><strong>Current job:</strong> {{ collaborator.current_job }}</li>
+        <li><strong>Email:</strong> {{ collaborator.email }}</li>
+        <li><strong>Phone number:</strong> {{ collaborator.phone_number }}</li>
+        <li><strong>Date d'arrivée:</strong> {{ collaborator.company_date_joined }}</li>
+        <li><strong>Direction actuelle:</strong> {{ collaborator.current_direction }}</li>
+        <li>
+            <strong>Service:</strong>
+            {% for service in services %}
+                {{ service }}
+            {% endfor %}
+        </li>
+
+        <li><img src="{{ collaborator.profile_picture.url }}" class="img-responsive" style="width: 30%; float: left; margin-right: 10px;" alt="Picture of this user"/></li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block pageTitle %}
+      Supprimer le collaborateur
+{% endblock %}
+
+{% block content %}
+
+  <p>Êtes-vous sûr de vouloir supprimer ce collaborateur ?</p>
+  <form method="post">
+    {% csrf_token %}
+    <input type="submit" value="Supprimer">
+    <a href="{% url 'annuaire_home' %}">Annuler</a>
+  </form>
+
+{% endblock %}
