@@ -24,8 +24,10 @@ from pton1_jennifer_ter import settings
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin console'),
 
+    path('', include('dashboard.urls'), name='dashboard prefix'),
     path('users/', include('users.urls'), name='users authentication prefix'),
     path('annuaire/', include('annuaire.urls'), name='annuaire prefix'),
+
 ]
 
 # Add media files to urlpatterns only if DEBUG is True
