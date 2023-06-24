@@ -1,6 +1,9 @@
+{% extends 'base.html' %}
+
 {% block pageTitle %}
     Profile of {{ collaborator.username }}
 {% endblock %}
+
 {% block content %}
     {% if user.id == collaborator.id %}
         <a href="{% url 'profile_update' collaborator.id %}">Update </a>

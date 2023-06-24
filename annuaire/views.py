@@ -1,7 +1,7 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import Http404
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic import ListView, DetailView, UpdateView
+from django.views.generic import ListView, DetailView, UpdateView, TemplateView, DeleteView
 
 from annuaire.forms import CollaboratorUpdateForm
 from users.models import Collaborator, Service
@@ -53,8 +53,10 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
 
     def dispatch(self, request, *args, **kwargs):
         collaborator_id = kwargs['pk']
+
         if self.request.user.id != collaborator_id:
-            raise Http404("Vous n'êtes pas autorisé à modifier ce profil.")
+            return redirect('error')
+
         return super().dispatch(request, *args, **kwargs)
 
     def get_object(self, queryset=None):
@@ -64,7 +66,7 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
         return reverse('collaborator_detail', kwargs={'pk': self.object.pk})
 
 
-def CollaboratorDeleteView(UserPassesTestMixin, DeleteView):
+class CollaboratorDeleteView(UserPassesTestMixin, DeleteView):
     model = Collaborator
     template_name = 'annuaire/collaborator_delete.html'
     success_url = reverse_lazy('annuaire_home')
@@ -73,7 +75,18 @@ def CollaboratorDeleteView(UserPassesTestMixin, DeleteView):
         collaborator = self.get_object()
         return collaborator.can_be_deleted_by(self.request.user)
 
-#
+    def handle_no_permission(self):
+        return redirect('error')
+
+
+class ErrorView(LoginRequiredMixin, TemplateView):
+    template_name = 'annuaire/error.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['message'] = "Vous n'avez pas les authorisations nécessaires pour accéder à cette page."
+        return context
+
 # # Create a new user
 # def collaborator_view(request):
 #     if request.method == 'POST':
