@@ -49,6 +49,7 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = Collaborator
     template_name = 'annuaire/profile_update.html'
     form_class = CollaboratorUpdateForm
+    context_object_name = 'collaborator'
 
     def dispatch(self, request, *args, **kwargs):
         collaborator_id = kwargs['pk']

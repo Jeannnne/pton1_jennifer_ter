@@ -67,3 +67,6 @@ De plus sur la page d'un detail, le boutton update n'est visible que lorsque l'u
 Comme mon model Collaborateur herite de AbstractUser, je ne suis pas en mesure de mettre le champ date_joined en read only. 
 Sauf si je créer un noveauchamp mais pour cela il faut que la valeur soit différente de la creation du user dans la bdd sinon c'est de la dupplciation de donnée avec le champ deja existant date_joined
 J'ai donc du créer un nouveau champ 
+
+J'ai pas reussi a mettre en read only le champ company_date_joined à cause du fait qu'il se remplisse automatiquement des la creation de l'objet et qu'il devient non editatble, alors la classe form ne le trouve pas 
+Donc j'ai rajouter en haut de la page d'update le champ company_date_joined pour qu'on puisse savoir sa valeur. 
