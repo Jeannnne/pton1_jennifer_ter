@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for tweet in tweets %}
+    <div class="tweet">
+        <p>{{ tweet.text }}</p>
+        <p>Date de création : {{ tweet.created_at }}</p>
+        <p>Hashtags : {% for hashtag in tweet.hashtags %}{{ hashtag.text }} {% endfor %}</p>
+        <!-- Autres informations des tweets que vous souhaitez afficher -->
+    </div>
+{% endfor %}
+
+{% endblock %}
