@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
+from django.utils import timezone
 from django.views.generic import ListView, DetailView, UpdateView, TemplateView, DeleteView
 
 from annuaire.forms import CollaboratorUpdateForm
@@ -86,6 +87,23 @@ class ErrorView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context['message'] = "Vous n'avez pas les authorisations nécessaires pour accéder à cette page."
         return context
+
+
+class FormerCollaboratorsView(LoginRequiredMixin, ListView):
+    model = Collaborator
+    template_name = 'annuaire/former_collaborators.html'
+    paginate_by = 2
+    context_object_name = 'former_collaborators'
+
+    def get_queryset(self):
+        queryset = Collaborator.objects.filter(date_left__lte=timezone.now().date())
+        service_id = self.request.GET.get('service_id')
+
+        if service_id:
+            queryset = queryset.filter(service__id=service_id)
+
+        return queryset
+
 
 # # Create a new user
 # def collaborator_view(request):

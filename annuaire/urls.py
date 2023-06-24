@@ -11,6 +11,7 @@ urlpatterns = [
     path('<int:pk>/update', views.ProfileUpdateView.as_view(), name='profile_update'),
     path('<int:pk>/delete', views.CollaboratorDeleteView.as_view(), name='profile_delete'),
 
+    path('former_collaborators', views.FormerCollaboratorsView.as_view(), name='former_collaborators'),
 
 
     # path('create_user', views.collaborator_view, name='image_upload'),

@@ -70,3 +70,14 @@ J'ai donc du créer un nouveau champ
 
 J'ai pas reussi a mettre en read only le champ company_date_joined à cause du fait qu'il se remplisse automatiquement des la creation de l'objet et qu'il devient non editatble, alors la classe form ne le trouve pas 
 Donc j'ai rajouter en haut de la page d'update le champ company_date_joined pour qu'on puisse savoir sa valeur. 
+
+J'ai rajouter une page pour les erreurs, comme ca on est rediriger vers cette page.
+
+## METTRE LE PROJET EN FRANCAIS
+
+J'ai un warning comme quoi je compare une date 'naive' sans timezone avec une date 'aware' avec timezone.
+Pourtant j'ai regarder dans mes validations de date, je n'ai pas de date naive, j'ai toujours des dates avec timezone.
+De plus lorsque j'applique un filtre pour obtenir les anciens j'utilise la date d'aujourd'huit avec une timezone aussi.
+Donc je ne sais pas d'ou vient le warning.
+
+
