@@ -80,17 +80,6 @@ Pourtant j'ai regarder dans mes validations de date, je n'ai pas de date naive, 
 De plus lorsque j'applique un filtre pour obtenir les anciens j'utilise la date d'aujourd'huit avec une timezone aussi.
 Donc je ne sais pas d'ou vient le warning.
 
-Meme si sur le site de tweeter j'ai les bonnes authorisation je n'arrive pas à m'y connecter.
-Voici le code : 
-    
-    auth = tweepy.OAuthHandler(settings.TWITTER_API_KEY, settings.TWITTER_API_SECRET_KEY)
-    auth.set_access_token(settings.TWITTER_ACCESS_TOKEN, settings.TWITTER_ACCESS_TOKEN_SECRET)
 
-    api = tweepy.API(auth, wait_on_rate_limit=True)
-
-    tweets = api.home_timeline()
-
-    for tweet in tweets:
-        print(tweet.created_at)  # Date de création du tweet
-        print(tweet.full_text)  # Texte complet du tweet
-        print("---")
+# Twitter
+Concernant Twitter, mes tweets ne sont pas les plus récent en effet, car a cause des recentes mise a jour de l'API, celle ci est inutilisable.
