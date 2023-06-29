@@ -83,3 +83,8 @@ Donc je ne sais pas d'ou vient le warning.
 
 # Twitter
 Concernant Twitter, mes tweets ne sont pas les plus récent en effet, car a cause des recentes mise a jour de l'API, celle ci est inutilisable.
+
+# Forum 
+
+Pour les class views je n'ai pas choisit d'utiliser le tempalte par defaut (<nom_du_model>_forms.hmtl) car si j'ai besoin de rajouter plusieurs forms ce n'est pas pratique par exemple c'est le meme nom de template par defaut pour un UpdateView
+

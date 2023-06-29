@@ -5,7 +5,7 @@ from users.models import Collaborator
 
 # Create your models here.
 
-class Topic(models.Model):
+class Subject(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -17,11 +17,11 @@ class Topic(models.Model):
 
 
 class CustomMessage(models.Model):
-    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     content = models.TextField(blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(Collaborator, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.content
+        return f"Message by {self.author.username} on {self.subject.title}"
 

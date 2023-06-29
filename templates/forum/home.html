@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block pageTitle %}
+    Forum
+{% endblock %}
+
+{% block content %}
+    {% for subject in object_list %}
+        <h2>{{ subject.title }}</h2>
+
+        {% if not subject.is_open %}
+            <span style="color: red;">Fermé</span>
+        {% endif %}
+
+        {% for message in subject.message_set.all %}
+            <p>{{ message.content }}</p>
+            <p>Auteur : {{ message.author }}</p>
+            <p>Date de publication : {{ message.creation_date }}</p>
+        {% endfor %}
+
+        <p>Nombre de messages : {{ subject.message_set.count }}</p>
+
+        <p>Dernier message posté par : {{ subject.message_set.last.author }}</p>
+        <p>Date du dernier message : {{ subject.message_set.last.creation_date }}</p>
+
+        {% if subject.is_open %}
+            <form action="{% url 'message_create' subject.pk %}" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Répondre</button>
+            </form>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

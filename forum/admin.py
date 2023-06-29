@@ -5,7 +5,7 @@ from forum.models import *
 
 # Register your models here.
 
-@admin.register(Topic)
+@admin.register(Subject)
 class TopicAdmin(admin.ModelAdmin):
     list_display = ['title', 'is_open', 'author', 'created_at']
     date_hierarchy = "created_at"
@@ -13,5 +13,5 @@ class TopicAdmin(admin.ModelAdmin):
 
 @admin.register(CustomMessage)
 class CustomMessageAdmin(admin.ModelAdmin):
-    list_display = ['topic', 'created_at', 'author']
+    list_display = ['subject', 'created_at', 'author']
     date_hierarchy = "created_at"
