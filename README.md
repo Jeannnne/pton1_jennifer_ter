@@ -1,4 +1,4 @@
-# pton1_jennifer_ter
+# pton1_jennifer_ter Oublie pas de refacto le code pour enlever par exemple les noms de templates
 
 Utilier un .env pour les variables d'environnements
 
