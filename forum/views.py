@@ -11,6 +11,26 @@ class SubjectListView(LoginRequiredMixin, ListView):
     template_name = 'forum/home.html'
     context_object_name = 'subjects'
 
+    def get_queryset(self):
+        return Subject.objects.all().order_by('last_updated_at')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        ordered_messages = CustomMessage.objects.all().order_by('-created_at')
+        subjects = Subject.objects.all().order_by('-created_at')
+
+        context_messages = []
+
+        for subject in subjects:
+            subject_messages = ordered_messages.filter(subject_id=subject.id).order_by('-created_at')
+            tuple = (subject.id, subject_messages.count(), subject_messages.first())
+
+            context_messages.append(tuple)
+
+        context['context_messages'] = context_messages
+
+        return context
+
 
 class SubjectDetailView(LoginRequiredMixin, DetailView):
     model = Subject
@@ -38,6 +58,11 @@ class MessageCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         author = self.request.user
         form.instance.author = author
+
+        # Update the date of the last message
+        subject = Subject.objects.get(id=self.kwargs['pk'])
+        subject.save()
+
         form.instance.subject_id = self.kwargs['pk']
 
         return super().form_valid(form)

@@ -12,6 +12,8 @@ class Subject(models.Model):
     is_open = models.BooleanField(default=True)
     author = models.ForeignKey(Collaborator, on_delete=models.CASCADE)
 
+    last_updated_at = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return self.title
 
