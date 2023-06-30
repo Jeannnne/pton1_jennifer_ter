@@ -1,4 +1,4 @@
-# pton1_jennifer_ter
+# pton1_jennifer_ter Oublie pas de refacto le code pour enlever par exemple les noms de templates
 
 Utilier un .env pour les variables d'environnements
 
@@ -80,17 +80,16 @@ Pourtant j'ai regarder dans mes validations de date, je n'ai pas de date naive, 
 De plus lorsque j'applique un filtre pour obtenir les anciens j'utilise la date d'aujourd'huit avec une timezone aussi.
 Donc je ne sais pas d'ou vient le warning.
 
-Meme si sur le site de tweeter j'ai les bonnes authorisation je n'arrive pas à m'y connecter.
-Voici le code : 
-    
-    auth = tweepy.OAuthHandler(settings.TWITTER_API_KEY, settings.TWITTER_API_SECRET_KEY)
-    auth.set_access_token(settings.TWITTER_ACCESS_TOKEN, settings.TWITTER_ACCESS_TOKEN_SECRET)
 
-    api = tweepy.API(auth, wait_on_rate_limit=True)
+# Twitter
+Concernant Twitter, mes tweets ne sont pas les plus récent en effet, car a cause des recentes mise a jour de l'API, celle ci est inutilisable.
 
-    tweets = api.home_timeline()
+# Forum 
 
-    for tweet in tweets:
-        print(tweet.created_at)  # Date de création du tweet
-        print(tweet.full_text)  # Texte complet du tweet
-        print("---")
+Pour les class views je n'ai pas choisit d'utiliser le tempalte par defaut (<nom_du_model>_forms.hmtl) car si j'ai besoin de rajouter plusieurs forms ce n'est pas pratique par exemple c'est le meme nom de template par defaut pour un UpdateView
+Pour savoir quand un sujet a ete update ou pas j'utilise un champ last_updated_at qui est en auto_add le seul soucis c'est si on change le boolean
+pour savoir si le sujet est fermé ou non. Car le champ sera modifié puisque la methode Model.save() est appelé.
+
+
+J'ai rajouter un lien sur la page home pour créer un nouveau sujet. 
+

@@ -27,6 +27,7 @@ urlpatterns = [
     path('', include('dashboard.urls'), name='dashboard prefix'),
     path('users/', include('users.urls'), name='users authentication prefix'),
     path('annuaire/', include('annuaire.urls'), name='annuaire prefix'),
+    path('forum/', include('forum.urls'), name='forum prefix'),
 
 ]
 

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block pageTitle %}
+    Forum
+{% endblock %}
+
+{% block content %}
+    <a href="{% url 'subject_create' %}">Créer un sujet</a>
+
+    {% for subject in subjects %}
+        <h2>{{ subject.title }}</h2>
+
+        {% if not subject.is_open %}
+            <span style="color: red;">Fermé</span>
+        {% endif %}
+
+        {% for message_tuple in context_messages %}
+            {% if message_tuple.0 == subject.id %}
+                <p>Nombre de messages : {{ message_tuple.1 }}</p>
+                <p>Auteur : {{ subject.author }}</p>
+
+                <p>Date du dernier message posté : {{ message_tuple.2.created_at }}</p>
+                <p>Posté par : {{ message_tuple.2.author }}</p>
+
+                <a href="{% url 'subject_detail' subject.id %}">Détail</a>
+            {% endif %}
+        {% endfor %}
+
+    {% endfor %}
+{% endblock %}

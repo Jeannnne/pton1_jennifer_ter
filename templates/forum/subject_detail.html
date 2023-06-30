@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block pageTitle %}
+    {{ subject.title }}
+{% endblock %}
+
+{% block content %}
+    {% if not subject.is_open %}
+        <span style="color: red;">Fermé</span>
+    {% endif %}
+
+    {% for message in messages %}
+        <p>{{ message.content }}</p>
+        <p>Auteur : {{ message.author }}</p>
+        <p>Date de publication : {{ message.created_at }}</p>
+    {% endfor %}
+
+    {% if subject.is_open %}
+        <form action="{% url 'message_create' subject.pk %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Répondre</button>
+        </form>
+    {% endif %}
+
+
+{% endblock %}
