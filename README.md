@@ -87,4 +87,9 @@ Concernant Twitter, mes tweets ne sont pas les plus récent en effet, car a caus
 # Forum 
 
 Pour les class views je n'ai pas choisit d'utiliser le tempalte par defaut (<nom_du_model>_forms.hmtl) car si j'ai besoin de rajouter plusieurs forms ce n'est pas pratique par exemple c'est le meme nom de template par defaut pour un UpdateView
+Pour savoir quand un sujet a ete update ou pas j'utilise un champ last_updated_at qui est en auto_add le seul soucis c'est si on change le boolean
+pour savoir si le sujet est fermé ou non. Car le champ sera modifié puisque la methode Model.save() est appelé.
+
+
+J'ai rajouter un lien sur la page home pour créer un nouveau sujet. 
 

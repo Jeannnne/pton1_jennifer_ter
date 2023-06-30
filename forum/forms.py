@@ -1,4 +1,4 @@
-from django.forms import ModelForm, TextInput, Textarea, Select
+from django.forms import ModelForm, TextInput, Textarea, Select, CharField
 
 from forum.models import Subject, CustomMessage
 
@@ -16,8 +16,7 @@ class CreateSubjectForm(ModelForm):
 class CreateMessageForm(ModelForm):
     class Meta:
         model = CustomMessage
-        fields = ['subject', 'content']
+        fields = ['content']
         widgets = {
-            'content': Textarea(attrs={'class': 'form-control'}),
-            'subject': Select(attrs={'class': 'form-control'})
+            'content': Textarea(attrs={'class': 'form-control'})
         }

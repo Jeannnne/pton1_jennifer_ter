@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block content %}
+    <a href="{% url 'subject_create' %}">Créer un sujet</a>
+
     {% for subject in subjects %}
         <h2>{{ subject.title }}</h2>
 
@@ -19,16 +21,10 @@
 
                 <p>Date du dernier message posté : {{ message_tuple.2.created_at }}</p>
                 <p>Posté par : {{ message_tuple.2.author }}</p>
+
+                <a href="{% url 'subject_detail' subject.id %}">Détail</a>
             {% endif %}
         {% endfor %}
-
-        {% if subject.is_open %}
-            <form action="{% url 'message_create' subject.pk %}" method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Répondre</button>
-            </form>
-        {% endif %}
 
     {% endfor %}
 {% endblock %}
