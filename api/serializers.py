@@ -7,7 +7,7 @@ class CollaboratorSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Collaborator
         fields = ['email', 'first_name', 'last_name', 'phone_number', 'date_left', 'service', 'current_job',
-                  'profile_picture', 'company_date_joined', 'api_key', 'api_secret']
+                  'profile_picture', 'company_date_joined']
 
 
 class ServiceSerializer(serializers.HyperlinkedModelSerializer):
