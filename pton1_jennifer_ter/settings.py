@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'annuaire',
     'users',
     'forum',
+    'api',
 
 ]
 
