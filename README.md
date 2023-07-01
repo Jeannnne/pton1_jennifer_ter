@@ -93,3 +93,7 @@ pour savoir si le sujet est fermé ou non. Car le champ sera modifié puisque la
 
 J'ai rajouter un lien sur la page home pour créer un nouveau sujet. 
 
+# API
+J'ai mis une authentification avec une clé API mais aussi avec un secret. 
+
+

@@ -9,3 +9,4 @@ django-allauth~=0.54.0
 pytz~=2023.3
 djangorestframework==3.14.0
 djangorestframework-api-key==2.3.0
+dj_rest_auth==2.2.0

@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'rest_framework',
     'rest_framework_api_key',
+    'rest_framework.authtoken',
 
     # Local apps
     'annuaire',
@@ -140,6 +141,7 @@ LOGIN_REDIRECT_URL = 'annuaire_home'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 AUTH_USER_MODEL = 'users.Collaborator'
+AUTH_PROFILE_MODULE = 'users.Collaborator'
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -163,13 +165,13 @@ PROFILE_PICTURE_PATH = os.path.join(MEDIA_ROOT, PROFILE_PICTURE_DIR_NAME)
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-TWITTER_API_KEY = os.getenv('TWITTER_API_KEY', '')
-TWITTER_API_SECRET_KEY = os.getenv('TWITTER_API_SECRET_KEY', '')
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
 
-TWITTER_BEARER_TOKEN = os.getenv('TWITTER_BEARER_TOKEN', '')
-
-TWITTER_ACCESS_TOKEN = os.getenv('TWITTER_ACCESS_TOKEN', '')
-TWITTER_ACCESS_TOKEN_SECRET = os.getenv('TWITTER_ACCESS_TOKEN_SECRET', '')
-
-TWITTER_ACCOUNT_FOLLOW = os.getenv('TWITTER_ACCOUNT_FOLLOW', 'afpfr')
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
 

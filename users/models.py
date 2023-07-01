@@ -1,6 +1,7 @@
 from io import BytesIO
 
 import requests
+from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import AbstractUser
 from django.core.files import File
 from django.db.models import CharField, EmailField, DateTimeField
@@ -47,6 +48,9 @@ class Collaborator(AbstractUser):
         validators=[validate_date_range]
     )
 
+    api_key = models.CharField(max_length=40, blank=True, null=True)
+    api_secret = models.CharField(max_length=140, blank=True, null=True)
+
     def __str__(self):
         return self.username
 
@@ -66,6 +70,9 @@ class Collaborator(AbstractUser):
 
     def can_be_deleted_by(self, user):
         return user.is_superuser
+
+    def has_valid_api_secret(self, secret_key: str) -> bool:
+        return check_password(secret_key, self.api_secret)
 
 
 class Service(models.Model):

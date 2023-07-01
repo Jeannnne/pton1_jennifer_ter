@@ -11,7 +11,7 @@ class CollaboratorAdmin(admin.ModelAdmin):
     list_filter = ['date_joined', 'date_left']
     search_fields = ['username', 'email', 'current_job']
     readonly_fields = ['date_joined']
-    exclude = ['password', 'last_login', 'groups', 'user_permissions', 'is_active']
+    exclude = ['password', 'last_login', 'groups', 'user_permissions', 'is_active', 'api_key', 'api_secret']
 
 
 @admin.register(Service)
