@@ -3,10 +3,11 @@ from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
 from api.utils import APIKeysView, ValidateAPIKeysView
-from api.views import CollaboratorViewSet
+from api.views import CollaboratorViewSet, ServiceViewSet
 
 router = DefaultRouter()
-router.register('collaborators', CollaboratorViewSet, basename='collaborators')
+router.register(r'collaborators', CollaboratorViewSet, basename='collaborator')
+router.register(r'services', ServiceViewSet, basename='service')
 
 urlpatterns = [
     path('', include(router.urls)),
