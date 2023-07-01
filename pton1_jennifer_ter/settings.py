@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'dotenv',
     'bootstrap5',
     'phonenumber_field',
+    'rest_framework',
+    'rest_framework_api_key',
 
     # Local apps
     'annuaire',
