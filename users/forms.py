@@ -1,5 +1,7 @@
-from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm, SetPasswordForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm, SetPasswordForm, UserCreationForm
 from django import forms
+
+from users.models import Service, Collaborator
 
 
 class CustomLoginForm(AuthenticationForm):
@@ -33,3 +35,14 @@ class CustomPasswordChangeForm(SetPasswordForm):
         strip=False,
         widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
     )
+
+
+class CreateCollaboratorForm(UserCreationForm):
+    email = forms.EmailField(required=False)
+    service = forms.ModelMultipleChoiceField(queryset=Service.objects.all())
+    current_job = forms.CharField(max_length=100)
+    phone_number = forms.CharField()
+
+    class Meta:
+        model = Collaborator
+        fields = ('username', 'email', 'password1', 'password2', 'service', 'current_job', 'phone_number')

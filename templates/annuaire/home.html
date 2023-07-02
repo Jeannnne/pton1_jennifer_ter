@@ -5,7 +5,7 @@
         <form action="" method="get">
             <label for="service-select">Sélectionnez un service :</label>
             <select name="service_id" id="service-select">
-                <option value="">Tous les services</option>
+                <option value="">Tous</option>
                 {% for service in services %}
                     <option value="{{ service.id }}">{{ service.name }}</option>
                 {% endfor %}

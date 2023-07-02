@@ -22,10 +22,10 @@
         {% for collaborator in former_collaborators %}
             <div class="col-md-3">
                     <a href="{% url 'collaborator_detail' collaborator.id %}">
-                        <img src="{{ collaborator.profile_picture.url }}" alt="{{ collaboraor.username }}"
+                        <img src="{{ collaborator.profile_picture.url }}" alt="{{ collaborator.username }}"
                              class="img-fluid" style="width: 30%; margin-right: 10px;">
                     </a>
-                    <h4><a href="{% url 'collaborator_detail' collaborator.id %}">{{ collaboraor.username }}</a></h4>
+                    <h4><a href="{% url 'collaborator_detail' collaborator.id %}">{{ collaborator.username }}</a></h4>
                 </div>
 
             {% empty %}

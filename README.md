@@ -1,95 +1,81 @@
-# pton1_jennifer_ter Oublie pas de refacto le code pour enlever par exemple les noms de templates
+# pton1_jennifer_ter
 
-Utilier un .env pour les variables d'environnements
-
-Pour l'authentification j'utilise les classes préfaite de django.contrib.auth tel que LoginView ... et la convention 
-Par conséquent, je ne rajoute pas plusieurs choses tel que le template name car j'ai suivi la convention,
+# Configuration
+Pour les variables d'environnements, j'ai utilisé un fichier .env
 
 
-    # Old version
-    class CustomPasswordResetView(PasswordResetView):
-        success_url = 'password_reset_done'
-        email_template_name = 'registration/password_reset_email.html'
-        form_class = CustomPasswordResetForm
+# Authentification
+Pour les vues, j'utilise les classes préfaites de django.contrib.auth, telles que LoginView, PasswordResetConfirmView....
+De plus, puisque je suis la convention, je n'ajoute pas plusieurs éléments comme le nom du template dans mes classes vues.
 
-    # New version
-    class CustomPasswordResetView(PasswordResetView):
-        form_class = CustomPasswordResetForm
+Par contre pour les vues dans "users", j'ai garder l'option template_name car je voulais ne pas oublier que les templates étaient lier a cette vue.
 
-Il y a possiilité de clicker sur le boutton mot de passe oublier, avec un formulaire pour envoyer son email afin de changer le mot de passe.
-Pour l'instant l'email est envoyé sur le terminal, mais il est possible de le configurer pour qu'il soit envoyé sur une adresse mail.
-Un lien est genéré avec un token pour changer le mot de passe.
+# Ancienne version
+class CustomPasswordResetView(PasswordResetView):
+    success_url = 'password_reset_done'
+    email_template_name = 'registration/password_reset_email.html'
+    form_class = CustomPasswordResetForm
 
-J'ai rajouter la class LoginRequiredMixin sur CustomPasswordChangeView et CustomPasswordChangeDoneView,
-comme ca uniquement les utilisateurs connectés peuvent changer leur mot de passe.
+# Nouvelle version
+class CustomPasswordResetView(PasswordResetView):
+    form_class = CustomPasswordResetForm
 
-Pour les user j'ai re-créer mon User qui s'appelle Collaborator, il herite d'AbstractUser car AbstractUser contient deja (username, first name, lastname, email, date_joined)
-En creant une classe heritant d'AbstractUser, je peux rajouter des champs tel que le poste, la direction actuelle pour correspondre au sujet tout en beneficiant des champs deja present d'AbstractUser
+J'ai ajouté la classe LoginRequiredMixin à CustomPasswordChangeView et CustomPasswordChangeDoneView, ainsi seuls les utilisateurs connectés peuvent changer leur mot de passe.
 
-Pour les validations des champs email, numero de telephone, et date d'arrivee, j'ai utiliser des classes spéciales qui font automatiquement la validation du format.
-De plus pour le numerio de telephone, j'ai renseigné le format attendu dans les parametres de la définition du champ .
+
+# Options supplémentaires
+Il y a l'option "Mot de passe oublié" lors de la connexion sur la page "users/login".
+Afin de changer son mot de passe, un email est envoyé à l'utilisateur avec un lien pour le changer. 
+
+L'email est envoyé dans la console avec un lien fonctionnel pour changer son mot de passe.
+
+
+# Le model User
+Pour les utilisateurs, j'ai recréé mon modèle User appelé Collaborator, qui hérite d'AbstractUser car AbstractUser contient déjà (username, first name, lastname, email). 
+En créant une classe qui hérite d'AbstractUser, je peux ajouter des champs tels que le poste et la direction actuelle pour correspondre au sujet, tout en bénéficiant des champs déjà présents dans AbstractUser.
+
+# Validation des champs du User
+Pour la validation des champs email et numéro de téléphone , j'ai utilisé des classes spéciales qui effectuent automatiquement la validation du format. 
+De plus, pour le numéro de téléphone, j'ai précisé le format attendu dans les paramètres de la définition du champ.
 
     phone_number = PhoneNumberField(
-                     blank=True, 
-                     region='FR',
-                     help_text="Entrez un numéro de téléphone au format français (par exemple, 0612345678)."
+                 blank=True, 
+                 region='FR',
+                 help_text="Entrez un numéro de téléphone au format français (par exemple, 0612345678)."
     )
 
+# Options supplémentaires
 Pour la date d'arrivée, j'ai utilisé un widget de type date picker pour faciliter la saisie de la date.
 
-J'aurais pu utuliser from django.utils.translation import gettext_lazy as _
- pour faciliter la traduciton de mon app en plusieurs langages mais je n'ai pas eu le temps.
+# Axes d'amélioration
+J'aurais pu utiliser from django.utils.translation import gettext_lazy as _ pour faciliter la traduction de mon application en plusieurs langages, mais je n'ai pas eu le temps.
 
 
+# Précisions sur les services et les images
+Pour les services, j'ai créé un object qui contient un parent (un objet du même type) et un nom afin de hiérarchiser les services présentés, comme indiqué dans le sujet.
 
-Pour les services, j'ai créer une table qui contient un parent (un object du meme type) et un nom afin de hierachiser les services présenter comme dans le sujet.
-
-Pour les images j'ai rajouter une variable dans settings.py comme ca si on veut changer la source de l'image on peut 
-De plus pour chaque nouveau user, on telecharge une nouvelle image, ca permet de savoir si un novueau user à été créer au lieu d'utiliser toujours la meme image par defaut.
-(Ou est ce qu'il faut telecharger une fois puis reutilsier l'image ? )
-
-Avec cette configuration, le répertoire default_images sera créé automatiquement lorsque le module config sera importé dans settings.py.
-
-Pour les servces j'ai réecris la fonction str afin de visualiser l'arborescence compltete du service (ex= DEV devient DSI/DEV).
-
-Pour le stockage des images c'est vrai que ca serait mieux de faire un renommage automatique avec prends le nom de l'app en question et qui créer des sous dossiers pour qu'on ait :
-
-    media/APP_NAME/images/IMAGE_NAME
-
-C'est plus propre et plus facile à retrouver. Mais je ne l'ai pas fait pour l'instant par manque de temps.
-
-Pour le home de l'annuaire j'ai fait en sorte que si on click sur l'image, on peut aussi acceder a la page du user
-Dans l hom de l'annuaire j'ai trié la liste des services pour avoir le plus global en premier et les plus specifique en bas.
-
-Pour la modification d'un profile j'ai fait deux sécurité, avec le path on ne peux pas accéder au formulaire pour la modification si ce n'est pas notre page
-De plus sur la page d'un detail, le boutton update n'est visible que lorsque l'utilisateur est sur sa propre page.
-
-Comme mon model Collaborateur herite de AbstractUser, je ne suis pas en mesure de mettre le champ date_joined en read only. 
-Sauf si je créer un noveauchamp mais pour cela il faut que la valeur soit différente de la creation du user dans la bdd sinon c'est de la dupplciation de donnée avec le champ deja existant date_joined
-J'ai donc du créer un nouveau champ 
-
-J'ai pas reussi a mettre en read only le champ company_date_joined à cause du fait qu'il se remplisse automatiquement des la creation de l'objet et qu'il devient non editatble, alors la classe form ne le trouve pas 
-Donc j'ai rajouter en haut de la page d'update le champ company_date_joined pour qu'on puisse savoir sa valeur. 
-
-J'ai rajouter une page pour les erreurs, comme ca on est rediriger vers cette page.
-
-## METTRE LE PROJET EN FRANCAIS
-
-J'ai un warning comme quoi je compare une date 'naive' sans timezone avec une date 'aware' avec timezone.
-Pourtant j'ai regarder dans mes validations de date, je n'ai pas de date naive, j'ai toujours des dates avec timezone.
-De plus lorsque j'applique un filtre pour obtenir les anciens j'utilise la date d'aujourd'huit avec une timezone aussi.
-Donc je ne sais pas d'ou vient le warning.
+Aussi, j'ai réécrit la méthode __str__ afin d'afficher l'arborescence complète du service (par exemple, "DEV" devient "DSI/DEV")
 
 
-# Twitter
-Concernant Twitter, mes tweets ne sont pas les plus récent en effet, car a cause des recentes mise a jour de l'API, celle ci est inutilisable.
+Pour les images, j'ai ajouté une variable dans settings.py afin de pouvoir changer la source de l'image si nécessaire.
+De plus, pour chaque nouvel utilisateur, une nouvelle image est téléchargée, ce qui permet de savoir si un nouvel utilisateur a été créé au lieu d'utiliser toujours la même image par défaut.
+   S'il fallait que chaque nouvel utilisateur ait la même image par défaut, le code s'adapterai bien puisqu'il suffirait de changer une seule fonction qui se trouve dans la classe User : 
 
-# Forum 
+    def save(self, *args, **kwargs):
+         if not self.profile_picture:
+            response = requests.get(settings.DEFAULT_IMAGE_LINK, stream=True)
+            response.raise_for_status()
 
-Pour les class views je n'ai pas choisit d'utiliser le tempalte par defaut (<nom_du_model>_forms.hmtl) car si j'ai besoin de rajouter plusieurs forms ce n'est pas pratique par exemple c'est le meme nom de template par defaut pour un UpdateView
-Pour savoir quand un sujet a ete update ou pas j'utilise un champ last_updated_at qui est en auto_add le seul soucis c'est si on change le boolean
-pour savoir si le sujet est fermé ou non. Car le champ sera modifié puisque la methode Model.save() est appelé.
+            if response.ok:
+                image_file = BytesIO(response.content)
+                self.profile_picture.save(settings.DEFAULT_IMAGE_NAME, File(image_file))
+
+            else:
+                print("Error while downloading default image")
+
+        super().save(*args, **kwargs)
+
+Après avoir vérifier si l'utilisateur a renseigné une image. Il faudra rajouter un check sur l'existance d'une image par défaut puis on la sélectionnerait au lieu d'en télécharger une nouvelle.
 
 
-J'ai rajouter un lien sur la page home pour créer un nouveau sujet. 
-
+De plus avec cette configuration, le répertoire default_images sera créé automatiquement lorsque le module config sera importé dans settings.py.

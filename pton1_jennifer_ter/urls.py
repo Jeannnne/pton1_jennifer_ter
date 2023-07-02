@@ -29,6 +29,8 @@ urlpatterns = [
     path('annuaire/', include('annuaire.urls'), name='annuaire prefix'),
     path('forum/', include('forum.urls'), name='forum prefix'),
 
+    path('api/', include('api.urls'), name='api prefix'),
+
 ]
 
 # Add media files to urlpatterns only if DEBUG is True

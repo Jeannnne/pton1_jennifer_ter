@@ -1,4 +1,7 @@
+import datetime
+
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db.models import Q
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
@@ -15,7 +18,7 @@ class HomeView(LoginRequiredMixin, ListView):
     paginate_by = 2
 
     def get_queryset(self):
-        queryset = Collaborator.objects.all().order_by('service')
+        queryset = Collaborator.objects.filter(Q(date_left__isnull=True) | Q(date_left__gt=timezone.now().date())).order_by('service')
         service_id = self.request.GET.get('service_id')
 
         if service_id:
@@ -92,7 +95,7 @@ class ErrorView(LoginRequiredMixin, TemplateView):
 class FormerCollaboratorsView(LoginRequiredMixin, ListView):
     model = Collaborator
     template_name = 'annuaire/former_collaborators.html'
-    paginate_by = 2
+    paginate_by = 10
     context_object_name = 'former_collaborators'
 
     def get_queryset(self):
@@ -103,20 +106,3 @@ class FormerCollaboratorsView(LoginRequiredMixin, ListView):
             queryset = queryset.filter(service__id=service_id)
 
         return queryset
-
-
-# # Create a new user
-# def collaborator_view(request):
-#     if request.method == 'POST':
-#         form = CreateCollaboratorForm(request.POST, request.FILES)
-#
-#         if form.is_valid():
-#             form.save()
-#             return redirect('success')
-#     else:
-#         form = CreateCollaboratorForm()
-#     return render(request, 'annuaire/new_profile.html', {'form': form})
-#
-#
-# def success(request):
-#     return HttpResponse('successfully uploaded')

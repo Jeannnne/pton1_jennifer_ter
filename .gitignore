@@ -1,7 +1,7 @@
 .idea/
 
 ### Migrations files
-**/migrations/*
+
 !**/migrations/__init__.py
 
 # Created by https://www.gitignore.io/api/macos,linux,django,python,pycharm
