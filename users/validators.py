@@ -5,8 +5,8 @@ from django.core.exceptions import ValidationError
 
 def validate_date_range(value):
     # Year, month, day
-    min_date = datetime(1970, 1, 1, tzinfo=pytz.UTC).date()
-    max_date = datetime(2050, 12, 31, tzinfo=pytz.UTC).date()
+    min_date = datetime(1970, 1, 1, tzinfo=pytz.UTC)
+    max_date = datetime(2050, 12, 31, tzinfo=pytz.UTC)
 
     if isinstance(value, date):
         if value < min_date or value > max_date:

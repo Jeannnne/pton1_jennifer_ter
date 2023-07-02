@@ -1,4 +1,4 @@
-from django.forms import ModelForm, TextInput, Textarea, Select, CharField
+from django.forms import ModelForm, TextInput, Textarea
 
 from forum.models import Subject, CustomMessage
 

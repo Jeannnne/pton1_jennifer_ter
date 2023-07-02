@@ -3,6 +3,7 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework import viewsets
 from rest_framework import permissions
 from api.serializers import CollaboratorSerializer, ServiceSerializer
+from api.utils import CustomPagination
 from users.models import Collaborator, Service
 
 
@@ -20,6 +21,7 @@ class CollaboratorViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Collaborator.objects.all()
     serializer_class = CollaboratorSerializer
+    pagination_class = CustomPagination
 
 
 @swagger_auto_schema(
@@ -35,4 +37,5 @@ class ServiceViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
+    pagination_class = CustomPagination
 

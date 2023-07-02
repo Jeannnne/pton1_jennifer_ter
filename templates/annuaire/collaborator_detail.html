@@ -5,6 +5,9 @@
 {% endblock %}
 
 {% block content %}
+    {% if user.is_superuser %}
+        <a href="{% url 'profile_delete' collaborator.id %}">Delete</a>
+    {% endif %}
     {% if user.id == collaborator.id %}
         <a href="{% url 'profile_update' collaborator.id %}">Update </a>
     {% endif %}

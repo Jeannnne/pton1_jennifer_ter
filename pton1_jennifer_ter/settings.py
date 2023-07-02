@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'rest_framework_api_key',
     'rest_framework.authtoken',
     'drf_yasg',
+    'requests',
 
     # Local apps
     'annuaire',
@@ -158,7 +159,7 @@ DEFAULT_IMAGE_NAME = 'default_picture.jpg'
 DEFAULT_IMAGE_LINK = os.getenv('DEFAULT_IMAGE_LINK', 'https://thispersondoesnotexist.com/')
 
 PROFILE_PICTURE_DIR_NAME = 'profile_pictures'
-PROFILE_PICTURE_PATH = os.path.join(MEDIA_ROOT, PROFILE_PICTURE_DIR_NAME)
+PROFILE_PICTURE_PATH = os.path.join(MEDIA_ROOT, PROFILE_PICTURE_DIR_NAME) # A supprimer ?
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/

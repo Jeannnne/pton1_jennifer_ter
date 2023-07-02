@@ -1,4 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
 
 from users.forms import *
 from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, PasswordChangeView, \
@@ -10,7 +12,7 @@ class CustomLoginView(LoginView):
     authentication_form = CustomLoginForm
 
 
-class CustomLogoutView(LogoutView):
+class CustomLogoutView(LoginRequiredMixin, LogoutView):
     next_page = 'annuaire_home'
 
 
@@ -41,3 +43,9 @@ class CustomPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
 
 class CustomPasswordChangeDoneView(LoginRequiredMixin, PasswordChangeDoneView):
     template_name = 'registration/password_change_done.html'
+
+
+class SignUpView(CreateView):
+    form_class = CreateCollaboratorForm
+    success_url = reverse_lazy('login')
+    template_name = 'registration/signup.html'

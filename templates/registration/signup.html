@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block pageTitle %}
+    Sign Up
+{% endblock %}
+
+{% block content %}
+    {% if user.is_superuser %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Rejoindre</button>
+        </form>
+    {% else %}
+        <p>Vous n'etes pas un administrateur, vous ne pouvez pas créer de compte.</p>
+    {% endif %}
+{% endblock %}

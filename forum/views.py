@@ -1,4 +1,6 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import CreateView, ListView, DetailView
 
@@ -18,7 +20,7 @@ class SubjectListView(LoginRequiredMixin, ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         ordered_messages = CustomMessage.objects.all().order_by('-created_at')
-        subjects = Subject.objects.all().order_by('-created_at')
+        subjects = Subject.objects.all().order_by('-last_updated_at')
 
         context_messages = []
 
@@ -38,8 +40,8 @@ class SubjectDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        messages = CustomMessage.objects.filter(subject_id=self.kwargs['pk']).order_by('created_at')
-        context['messages'] = messages
+        custom_messages = CustomMessage.objects.filter(subject_id=self.kwargs['pk']).order_by('created_at')
+        context['custom_messages'] = custom_messages
 
         return context
 
@@ -55,8 +57,6 @@ class SubjectCreateView(LoginRequiredMixin, CreateView):
         form.instance.author = author
 
         return super().form_valid(form)
-
-
 
 
 class MessageCreateView(LoginRequiredMixin, CreateView):
@@ -76,13 +76,19 @@ class MessageCreateView(LoginRequiredMixin, CreateView):
         author = self.request.user
         form.instance.author = author
 
-        # Update the date of the last message
         subject = Subject.objects.get(id=self.kwargs['pk'])
-        subject.save()
 
-        form.instance.subject = subject
+        if subject.is_open:
+            # Update the date of the last message
+            subject.save()
 
-        return super().form_valid(form)
+            form.instance.subject = subject
+
+            form.save()
+            return super().form_valid(form)
+
+        messages.error(self.request, "Le sujet est clos. Vous ne pouvez pas rajouter de message.")
+        return redirect('subject_detail', pk=subject.pk)
 
     def get_success_url(self):
         subject_id = self.kwargs['pk']
